@@ -1,0 +1,2 @@
+exec:
+	python main.py
