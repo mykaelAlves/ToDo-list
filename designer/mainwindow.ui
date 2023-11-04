@@ -2245,6 +2245,21 @@ PlotWidget {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>870</width>
+     <height>455</height>
+    </size>
+   </property>
+   <property name="baseSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
@@ -2263,14 +2278,36 @@ PlotWidget {
        <property name="bottomMargin">
         <number>400</number>
        </property>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="edit_button">
+         <property name="text">
+          <string>Edit task</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../icons/pen-tool.svg</normaloff>../icons/pen-tool.svg</iconset>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="see_all_button">
          <property name="text">
           <string>See all tasks</string>
          </property>
          <property name="icon">
           <iconset>
            <normaloff>../icons/eye.svg</normaloff>../icons/eye.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="remove_button">
+         <property name="text">
+          <string>Remove task</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../icons/minus.svg</normaloff>../icons/minus.svg</iconset>
          </property>
         </widget>
        </item>
@@ -2287,30 +2324,8 @@ PlotWidget {
          </property>
         </spacer>
        </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Edit task</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../icons/pen-tool.svg</normaloff>../icons/pen-tool.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Remove task</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../icons/file-minus.svg</normaloff>../icons/file-minus.svg</iconset>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="add_button">
          <property name="text">
           <string>Add task</string>
          </property>
@@ -2337,18 +2352,57 @@ PlotWidget {
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>140</x>
       <y>10</y>
-      <width>801</width>
-      <height>451</height>
+      <width>631</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TODAY</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>60</y>
+      <width>701</width>
+      <height>391</height>
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>380</y>
+      <width>111</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icons/cat_icon.png</pixmap>
+    </property>
+   </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="sizeGripEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>

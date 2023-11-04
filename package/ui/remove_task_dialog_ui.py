@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'D:\Git\ToDo-list\designer\add_task_dialog.ui'
+# Form implementation generated from reading ui file 'D:\Git\ToDo-list\designer\remove_task_dialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -15,7 +15,7 @@ class Ui_Dialog(object):
         Dialog.resize(400, 400)
         Dialog.setMaximumSize(QtCore.QSize(400, 400))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/plus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/minus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setStyleSheet("/* ---------------------------------------------------------------------------\n"
 "\n"
@@ -2233,38 +2233,25 @@ class Ui_Dialog(object):
 "  /* Fix cut labels in plots #134 */\n"
 "  padding: 0px;\n"
 "}")
-        self.buttonBox = QtWidgets.QDialogButtonBox(parent=Dialog)
-        self.buttonBox.setGeometry(QtCore.QRect(40, 350, 341, 32))
-        self.buttonBox.setOrientation(QtCore.Qt.Orientation.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Cancel|QtWidgets.QDialogButtonBox.StandardButton.Ok)
-        self.buttonBox.setObjectName("buttonBox")
-        self.task_title = QtWidgets.QTextEdit(parent=Dialog)
-        self.task_title.setGeometry(QtCore.QRect(10, 40, 381, 31))
-        self.task_title.setObjectName("task_title")
+        self.task_list = QtWidgets.QListWidget(parent=Dialog)
+        self.task_list.setGeometry(QtCore.QRect(15, 41, 371, 291))
+        self.task_list.setObjectName("task_list")
         self.label = QtWidgets.QLabel(parent=Dialog)
-        self.label.setGeometry(QtCore.QRect(10, 20, 91, 16))
+        self.label.setGeometry(QtCore.QRect(20, 20, 151, 16))
         self.label.setObjectName("label")
-        self.task_date = QtWidgets.QTextEdit(parent=Dialog)
-        self.task_date.setGeometry(QtCore.QRect(10, 100, 381, 31))
-        self.task_date.setObjectName("task_date")
-        self.label_2 = QtWidgets.QLabel(parent=Dialog)
-        self.label_2.setGeometry(QtCore.QRect(10, 80, 91, 16))
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(parent=Dialog)
-        self.label_3.setGeometry(QtCore.QRect(10, 140, 91, 16))
-        self.label_3.setObjectName("label_3")
-        self.task_details = QtWidgets.QTextEdit(parent=Dialog)
-        self.task_details.setGeometry(QtCore.QRect(10, 160, 381, 181))
-        self.task_details.setObjectName("task_details")
+        self.remove_confirm_button = QtWidgets.QPushButton(parent=Dialog)
+        self.remove_confirm_button.setGeometry(QtCore.QRect(20, 350, 221, 24))
+        self.remove_confirm_button.setObjectName("remove_confirm_button")
+        self.reject_button = QtWidgets.QPushButton(parent=Dialog)
+        self.reject_button.setGeometry(QtCore.QRect(250, 350, 131, 24))
+        self.reject_button.setObjectName("reject_button")
 
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
-        self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "ToDo-list | Add task"))
-        self.label.setText(_translate("Dialog", "Task name"))
-        self.label_2.setText(_translate("Dialog", "Deadline"))
-        self.label_3.setText(_translate("Dialog", "Description"))
+        Dialog.setWindowTitle(_translate("Dialog", "ToDo-list | Remove task"))
+        self.label.setText(_translate("Dialog", "Choose a task to remove"))
+        self.remove_confirm_button.setText(_translate("Dialog", "Remove it"))
+        self.reject_button.setText(_translate("Dialog", "Cancel"))
