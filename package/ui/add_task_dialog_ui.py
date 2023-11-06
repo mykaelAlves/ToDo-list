@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'D:\Git\ToDo-list\designer\add_task_dialog.ui'
+# Form implementation generated from reading ui file 'designer\add_task_dialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -15,7 +15,7 @@ class Ui_Dialog(object):
         Dialog.resize(400, 400)
         Dialog.setMaximumSize(QtCore.QSize(400, 400))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/plus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("designer\\../icons/plus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setStyleSheet("/* ---------------------------------------------------------------------------\n"
 "\n"

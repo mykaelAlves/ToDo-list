@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'D:\Git\ToDo-list\designer\mainwindow.ui'
+# Form implementation generated from reading ui file 'designer\mainwindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(960, 540)
         MainWindow.setMaximumSize(QtCore.QSize(960, 540))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/list.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("designer\\../icons/list.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setWindowOpacity(1.0)
         MainWindow.setStyleSheet("/* ---------------------------------------------------------------------------\n"
@@ -2250,19 +2250,19 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName("gridLayout")
         self.edit_button = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/pen-tool.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap("designer\\../icons/pen-tool.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.edit_button.setIcon(icon1)
         self.edit_button.setObjectName("edit_button")
         self.gridLayout.addWidget(self.edit_button, 2, 1, 1, 1)
         self.see_all_button = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/eye.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon2.addPixmap(QtGui.QPixmap("designer\\../icons/eye.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.see_all_button.setIcon(icon2)
         self.see_all_button.setObjectName("see_all_button")
         self.gridLayout.addWidget(self.see_all_button, 0, 1, 1, 1)
         self.remove_button = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/minus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon3.addPixmap(QtGui.QPixmap("designer\\../icons/minus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.remove_button.setIcon(icon3)
         self.remove_button.setObjectName("remove_button")
         self.gridLayout.addWidget(self.remove_button, 3, 1, 1, 1)
@@ -2270,7 +2270,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addItem(spacerItem, 4, 1, 1, 1)
         self.add_button = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/plus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon4.addPixmap(QtGui.QPixmap("designer\\../icons/plus.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.add_button.setIcon(icon4)
         self.add_button.setObjectName("add_button")
         self.gridLayout.addWidget(self.add_button, 1, 1, 1, 1)
@@ -2295,7 +2295,7 @@ class Ui_MainWindow(object):
         self.label_2 = QtWidgets.QLabel(parent=self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(860, 380, 111, 101))
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("D:\\Git\\ToDo-list\\designer\\../icons/cat_icon.png"))
+        self.label_2.setPixmap(QtGui.QPixmap("designer\\../icons/cat_icon.png"))
         self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)

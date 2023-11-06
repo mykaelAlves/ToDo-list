@@ -12,6 +12,6 @@ test:
 	python main.py
 
 ds:
-	python.exe -m PyQt6.uic.pyuic D:\Git\ToDo-list\designer\mainwindow.ui -o D:\Git\ToDo-list\package\ui\mainwindow_ui.py
-	python.exe -m PyQt6.uic.pyuic D:\Git\ToDo-list\designer\add_task_dialog.ui -o D:\Git\ToDo-list\package\ui\add_task_dialog_ui.py
-	python.exe -m PyQt6.uic.pyuic D:\Git\ToDo-list\designer\remove_task_dialog.ui -o D:\Git\ToDo-list\package\ui\remove_task_dialog_ui.py
+	python.exe -m PyQt6.uic.pyuic designer\mainwindow.ui -o package\ui\mainwindow_ui.py
+	python.exe -m PyQt6.uic.pyuic designer\add_task_dialog.ui -o package\ui\add_task_dialog_ui.py
+	python.exe -m PyQt6.uic.pyuic designer\remove_task_dialog.ui -o package\ui\remove_task_dialog_ui.py
