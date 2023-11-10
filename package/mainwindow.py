@@ -2,6 +2,8 @@ from PyQt6.QtWidgets import QMainWindow, QDialog
 from package.ui.mainwindow_ui import Ui_MainWindow
 from package.ui import add_task_dialog_ui
 from package.ui import remove_task_dialog_ui
+from package.ui import see_all_tasks_dialog_ui
+from package.ui import edit_task_dialog_ui
 
 
 class MainWindow(QMainWindow):
@@ -11,6 +13,8 @@ class MainWindow(QMainWindow):
         ui.setupUi(self)
         ui.add_button.clicked.connect(self.add_it)
         ui.remove_button.clicked.connect(self.remove_it)
+        ui.edit_button.clicked.connect(self.edit_it)
+        ui.see_all_button.clicked.connect(self.see_it)
         self.show()
 
 
@@ -19,8 +23,8 @@ class MainWindow(QMainWindow):
         ui = add_task_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
 
-        #ui.buttonBox.accepted.connect() #to implement
-        #ui.buttonBox.rejected.connect() #to implement
+        #ui.buttonBox.accepted.connect() ;;to implement
+        #ui.buttonBox.rejected.connect() ;;to implement
 
         dialog.exec()
 
@@ -33,9 +37,20 @@ class MainWindow(QMainWindow):
         dialog.exec()
 
 
-    def see_it():
-        pass
+    def see_it(self):
+        dialog = QDialog()
+        ui = see_all_tasks_dialog_ui.Ui_Dialog()
+        ui.setupUi(dialog)
+
+        #ui.buttonBox.accepted.connect() ;;to implement
+        #ui.buttonBox.rejected.connect() ;;to implement
+
+        dialog.exec()
 
 
-    def edit_it():
-        pass
+    def edit_it(self):
+        dialog = QDialog()
+        ui = edit_task_dialog_ui.Ui_Dialog()
+        ui.setupUi(dialog)
+
+        dialog.exec()
