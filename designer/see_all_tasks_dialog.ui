@@ -17,7 +17,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>ToDo-list | See tasks</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icons/eye.svg</normaloff>../icons/eye.svg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">/* ---------------------------------------------------------------------------

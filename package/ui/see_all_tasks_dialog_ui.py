@@ -14,6 +14,9 @@ class Ui_Dialog(object):
         Dialog.setObjectName("Dialog")
         Dialog.resize(800, 400)
         Dialog.setMaximumSize(QtCore.QSize(800, 400))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("designer\\../icons/eye.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        Dialog.setWindowIcon(icon)
         Dialog.setStyleSheet("/* ---------------------------------------------------------------------------\n"
 "\n"
 "    WARNING! File created programmatically. All changes made in this file will be lost!\n"
@@ -2251,5 +2254,5 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "ToDo-list | See tasks"))
         self.label.setText(_translate("Dialog", "All tasks"))
