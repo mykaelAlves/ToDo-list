@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
             self.tasks.append(Task(deadline, title, description))
 
             self.ui.listWidget.addItem(self.tasks[len(self.tasks) - 1].title)
-            self.con_cursor.execute("SELECT * FROM sqlite_master")
+            """ self.con_cursor.execute("SELECT * FROM sqlite_master")
             if not bool(self.con_cursor.fetchall()):
                 print("sa")
                 self.con_cursor.execute('''CREATE TABLE SqliteDb_developers (
@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
                                     email text NOT NULL UNIQUE,
                                     joining_date datetime,
                                     salary REAL NOT NULL);''')
-            print(self.con_cursor.fetchall())
+            print(self.con_cursor.fetchall()) """
 
 
     def remove_it(self):
