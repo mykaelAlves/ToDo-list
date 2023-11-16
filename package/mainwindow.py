@@ -14,6 +14,16 @@ class MainWindow(QMainWindow):
     
     def __init__(self):
         super(MainWindow, self).__init__()
+
+        self.con_cursor.execute("SELECT * FROM sqlite_master")
+
+        if not bool(self.con_cursor.fetchall()): #check if db exists
+            self.con_cursor.execute('''CREATE TABLE Items (
+                                    title TEXT NOT NULL UNIQUE,
+                                    description text,
+                                    deadline datetime
+                                    );''')
+            
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.add_button.clicked.connect(self.add_it)
@@ -23,8 +33,10 @@ class MainWindow(QMainWindow):
         self.ui.done_button.clicked.connect(self.task_done)
         self.show()
 
+
     def was_clicked(self):
         self.go = True
+
 
     def add_it(self):
         self.go = False
@@ -44,17 +56,13 @@ class MainWindow(QMainWindow):
 
             self.tasks.append(Task(deadline, title, description))
 
+            title = self.tasks[len(self.tasks) - 1].title
+            deadline = self.tasks[len(self.tasks) - 1].deadline
+            description = self.tasks[len(self.tasks) - 1].description
+
             self.ui.listWidget.addItem(self.tasks[len(self.tasks) - 1].title)
-            """ self.con_cursor.execute("SELECT * FROM sqlite_master")
-            if not bool(self.con_cursor.fetchall()):
-                print("sa")
-                self.con_cursor.execute('''CREATE TABLE SqliteDb_developers (
-                                    id INTEGER PRIMARY KEY,
-                                    name TEXT NOT NULL,
-                                    email text NOT NULL UNIQUE,
-                                    joining_date datetime,
-                                    salary REAL NOT NULL);''')
-            print(self.con_cursor.fetchall()) """
+
+            self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, description, deadline))
 
 
     def remove_it(self):

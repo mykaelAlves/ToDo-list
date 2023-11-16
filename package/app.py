@@ -8,3 +8,6 @@ def run():
     window = MainWindow()
 
     app.exec()
+
+    window.connection.commit()
+    window.connection.close()
