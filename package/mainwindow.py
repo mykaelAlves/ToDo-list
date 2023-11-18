@@ -6,13 +6,14 @@ from package.ui import remove_task_dialog_ui
 from package.ui import see_all_tasks_dialog_ui
 from package.ui import edit_task_dialog_ui
 from package.task import Task
-import pickle
 
 
 class MainWindow(QMainWindow):
     connection, con_cursor = connection_db.get_connection()
     tasks = []
+    no_deadline_exception = "NoDeadlineException: there's a column with no deadline"
     
+
     def __init__(self):
         super(MainWindow, self).__init__()
 
@@ -28,6 +29,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.load_list()
+        self.ui.listWidget.itemClicked.connect(self.task_done)
         self.ui.add_button.clicked.connect(self.add_it)
         self.ui.remove_button.clicked.connect(self.remove_it)
         self.ui.edit_button.clicked.connect(self.edit_it)
@@ -42,7 +44,9 @@ class MainWindow(QMainWindow):
         records = self.con_cursor.fetchall()
 
         for row in records:
+            print(f"records: {records}")
             task = Task(row[0], row[2], row[1])
+
             if not self.is_already_on_list(task):
                 self.tasks.append(task)
             self.today_list_widget()
@@ -52,6 +56,7 @@ class MainWindow(QMainWindow):
         for i in self.tasks:
             if i.title == task.title:
                 return True
+            
         return False
 
 
@@ -59,8 +64,9 @@ class MainWindow(QMainWindow):
         try:
             if self.tasks[len(self.tasks) - 1].is_today():
                 self.ui.listWidget.addItem(self.tasks[len(self.tasks) - 1].title)
+                
         except:
-            print("there's a column with no deadline")
+            print(self.no_deadline_exception)
 
 
     def not_due_list_widget(self):
@@ -68,8 +74,9 @@ class MainWindow(QMainWindow):
             if not self.tasks[len(self.tasks) - 1].is_due():
                 pass
                 #to implement
+
         except:
-            print("there's a column with no deadline")
+            print(self.no_deadline_exception)
 
 
     def was_clicked(self):
@@ -130,5 +137,24 @@ class MainWindow(QMainWindow):
         dialog.exec()
 
     
-    def task_done(self):
-        pass
+    def remove_task(self):
+        try:
+            title = self.ui.listWidget.currentItem().text()
+            self.con_cursor.execute("DELETE FROM Items WHERE title=?", (title,))
+        
+            for i in self.tasks:
+                if i.title.__eq__(title):
+                    self.tasks.remove(i)
+                    break
+
+            print(self.tasks)
+
+        except:
+            print("nothing was selected")
+
+        self.ui.listWidget.clear()
+        self.load_list()
+
+
+    def task_done(self):       
+        self.ui.done_button.clicked.connect(self.remove_task)

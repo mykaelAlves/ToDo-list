@@ -2253,5 +2253,5 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "ToDo-list | Edit tasks"))
         self.reject_button.setText(_translate("Dialog", "Cancel"))
-        self.label.setText(_translate("Dialog", "Choose a task to remove"))
+        self.label.setText(_translate("Dialog", "Choose a task to edit"))
         self.remove_confirm_button.setText(_translate("Dialog", "Edit it"))

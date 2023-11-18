@@ -2264,7 +2264,7 @@ PlotWidget {
     </rect>
    </property>
    <property name="text">
-    <string>Choose a task to remove</string>
+    <string>Choose a task to edit</string>
    </property>
   </widget>
   <widget class="QListWidget" name="task_list">
