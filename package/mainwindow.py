@@ -42,22 +42,15 @@ class MainWindow(QMainWindow):
         self.con_cursor.execute("SELECT * from Items")
 
         records = self.con_cursor.fetchall()
+        print(f"records: {records}")
+        self.tasks.clear()
+        self.ui.listWidget.clear()
 
         for row in records:
-            print(f"records: {records}")
             task = Task(row[0], row[2], row[1])
 
-            if not self.is_already_on_list(task):
-                self.tasks.append(task)
+            self.tasks.append(task)
             self.today_list_widget()
-
-
-    def is_already_on_list(self, task):
-        for i in self.tasks:
-            if i.title == task.title:
-                return True
-            
-        return False
 
 
     def today_list_widget(self):
@@ -131,7 +124,8 @@ class MainWindow(QMainWindow):
         ui.tableWidget.setColumnWidth(0, 260)
         ui.tableWidget.setColumnWidth(2, 542)
 
-        r=0
+        r = 0
+
         for row in records:
             ui.tableWidget.setItem(r, 0, QTableWidgetItem(row[0]))
             ui.tableWidget.setItem(r, 1, QTableWidgetItem(row[2]))
