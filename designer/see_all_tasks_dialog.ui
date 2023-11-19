@@ -2266,6 +2266,21 @@ PlotWidget {
      <height>321</height>
     </rect>
    </property>
+   <column>
+    <property name="text">
+     <string>Title</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Deadline</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Description</string>
+    </property>
+   </column>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">

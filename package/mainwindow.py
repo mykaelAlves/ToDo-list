@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QMainWindow, QDialog
+from PyQt6.QtWidgets import QMainWindow, QDialog, QTableWidgetItem
 from package import connection_db
 from package.ui.mainwindow_ui import Ui_MainWindow
 from package.ui import add_task_dialog_ui
@@ -123,6 +123,21 @@ class MainWindow(QMainWindow):
         ui = see_all_tasks_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
 
+        self.con_cursor.execute("SELECT * from Items")
+
+        records = self.con_cursor.fetchall()
+
+        ui.tableWidget.setRowCount(3)
+        ui.tableWidget.setColumnWidth(0, 260)
+        ui.tableWidget.setColumnWidth(2, 542)
+
+        r=0
+        for row in records:
+            ui.tableWidget.setItem(r, 0, QTableWidgetItem(row[0]))
+            ui.tableWidget.setItem(r, 1, QTableWidgetItem(row[2]))
+            ui.tableWidget.setItem(r, 2, QTableWidgetItem(row[1]))
+            r+=1
+
         #ui.buttonBox.accepted.connect() ;;to implement
         #ui.buttonBox.rejected.connect() ;;to implement
 
@@ -133,6 +148,9 @@ class MainWindow(QMainWindow):
         dialog = QDialog()
         ui = edit_task_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
+        
+        for i in self.tasks:
+            ui.task_list.addItem(i.title)
 
         dialog.exec()
 
