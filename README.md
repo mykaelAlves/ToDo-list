@@ -4,7 +4,7 @@ Consiste em uma lista de afazeres que ajuda o usuário a controlar suas tarefas 
 ![Imagem da tela principal](icons/project_img_1.png "Tela principal")
 
 ## Adicionar
-* Para adicionar algo, a data deve seguir o formato DD/MM/YY.
+* Para adicionar algo, a data deve seguir o formato DD/MM/YY, DD-MM-YY, DD MM YY ou DD.MM.YY.
 * O título deve ser único.
 
 ## Remover

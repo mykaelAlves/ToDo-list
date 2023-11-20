@@ -11,7 +11,7 @@ from package.task import Task
 class MainWindow(QMainWindow):
     connection, con_cursor = connection_db.get_connection()
     tasks = []
-    no_deadline_exception = "NoDeadlineException: there's a column with no deadline"
+    no_deadline_exception = "NoDeadlineException: there's a column with no deadline in acceptable format"
     
 
     def __init__(self):
@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
             
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.load_list()
+        self.load_list(self.ui.listWidget)
         self.ui.listWidget.itemClicked.connect(self.task_done)
         self.ui.add_button.clicked.connect(self.add_it)
         self.ui.remove_button.clicked.connect(self.remove_it)
@@ -38,19 +38,25 @@ class MainWindow(QMainWindow):
         self.show()
 
 
-    def load_list(self):
+    def load_list(self, listWidget):
         self.con_cursor.execute("SELECT * from Items")
 
         records = self.con_cursor.fetchall()
         print(f"records: {records}")
         self.tasks.clear()
-        self.ui.listWidget.clear()
+        listWidget.clear()
 
         for row in records:
             task = Task(row[0], row[2], row[1])
 
             self.tasks.append(task)
-            self.today_list_widget()
+
+            if listWidget == self.ui.listWidget:
+                self.today_list_widget()
+
+                continue
+
+            listWidget.addItem(task.title)
 
 
     def today_list_widget(self):
@@ -58,8 +64,8 @@ class MainWindow(QMainWindow):
             if self.tasks[len(self.tasks) - 1].is_today():
                 self.ui.listWidget.addItem(self.tasks[len(self.tasks) - 1].title)
                 
-        except:
-            print(self.no_deadline_exception)
+        except Exception as e:
+            print(e)
 
 
     def not_due_list_widget(self):
@@ -100,15 +106,31 @@ class MainWindow(QMainWindow):
 
             self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (deadline, description, title))
 
-            self.load_list()
+            self.load_list(self.ui.listWidget)
 
 
     def remove_it(self):
+        self.go = False
+        
         dialog = QDialog()
         ui = remove_task_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
+        
+        self.con_cursor.execute("SELECT * from Items")
+
+        records = self.con_cursor.fetchall()
+
+        for row in records:
+            task = Task(row[0], row[2], row[1])
+
+            ui.task_list.addItem(task.title)
+
+        ui.remove_confirm_button.clicked.connect(lambda: self.remove_task(ui.task_list))
+        ui.reject_button.clicked.connect(dialog.close)
 
         dialog.exec()
+
+        self.load_list(self.ui.listWidget)
 
 
     def see_it(self):
@@ -120,7 +142,7 @@ class MainWindow(QMainWindow):
 
         records = self.con_cursor.fetchall()
 
-        ui.tableWidget.setRowCount(3)
+        ui.tableWidget.setRowCount(len(self.tasks))
         ui.tableWidget.setColumnWidth(0, 260)
         ui.tableWidget.setColumnWidth(2, 542)
 
@@ -130,10 +152,8 @@ class MainWindow(QMainWindow):
             ui.tableWidget.setItem(r, 0, QTableWidgetItem(row[0]))
             ui.tableWidget.setItem(r, 1, QTableWidgetItem(row[2]))
             ui.tableWidget.setItem(r, 2, QTableWidgetItem(row[1]))
+            
             r+=1
-
-        #ui.buttonBox.accepted.connect() ;;to implement
-        #ui.buttonBox.rejected.connect() ;;to implement
 
         dialog.exec()
 
@@ -146,12 +166,16 @@ class MainWindow(QMainWindow):
         for i in self.tasks:
             ui.task_list.addItem(i.title)
 
+        ui.reject_button.clicked.connect(dialog.close)
+
         dialog.exec()
 
+        self.load_list(self.ui.listWidget)
+
     
-    def remove_task(self):
+    def remove_task(self, listWidget):
         try:
-            title = self.ui.listWidget.currentItem().text()
+            title = listWidget.currentItem().text()
             self.con_cursor.execute("DELETE FROM Items WHERE title=?", (title,))
         
             for i in self.tasks:
@@ -161,12 +185,11 @@ class MainWindow(QMainWindow):
 
             print(self.tasks)
 
-        except:
-            print("nothing was selected")
+        except Exception as e:
+            print(e)
 
-        self.ui.listWidget.clear()
-        self.load_list()
+        self.load_list(listWidget)
 
 
     def task_done(self):       
-        self.ui.done_button.clicked.connect(self.remove_task)
+        self.ui.done_button.clicked.connect(lambda: self.remove_task(self.ui.listWidget))

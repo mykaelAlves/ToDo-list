@@ -1,16 +1,23 @@
 from datetime import datetime
 import time
 
-class Item():
-    due = False
-    
+class Item():      
     def __init__(self, title, deadline, description):
         self.deadline = deadline
         self.title = title
         self.description = description
 
+
     def __get_dates(self):
-        deadline = self.deadline.split("/");
+        if "/" in self.deadline:
+            deadline = self.deadline.split("/");
+        if "-" in self.deadline:
+            deadline = self.deadline.split("-");
+        if ' ' in self.deadline:
+            deadline = self.deadline.split(' ');
+        if "." in self.deadline:
+            deadline = self.deadline.split(".");
+
         deadline = [x for x in deadline if x != '']
 
         j = 0
@@ -29,12 +36,15 @@ class Item():
         deadline, today_date = self.__get_dates()
 
         if deadline < today_date:
-            self.due = True
+            return True
 
-        return self.due
+        return False
     
+
     def is_today(self):
         deadline, today_date = self.__get_dates()
 
         if deadline.date() == today_date.date():
             return True
+        
+        return False
