@@ -906,6 +906,7 @@ class Ui_MainWindow(object):
 "  padding: 2px;\n"
 "  margin: 0px;\n"
 "  color: #E0E1E3;\n"
+"  font-size: 20pt;\n"
 "}\n"
 "\n"
 "QLabel:disabled {\n"
@@ -2281,9 +2282,9 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
         self.line.setObjectName("line")
         self.todayText = QtWidgets.QLabel(parent=self.centralwidget)
-        self.todayText.setGeometry(QtCore.QRect(140, 10, 631, 31))
+        self.todayText.setGeometry(QtCore.QRect(140, 20, 631, 31))
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(20)
         font.setBold(True)
         self.todayText.setFont(font)
         self.todayText.setObjectName("todayText")
@@ -2299,7 +2300,7 @@ class Ui_MainWindow(object):
         self.done_button.setGeometry(QtCore.QRect(1040, 650, 75, 24))
         self.done_button.setObjectName("done_button")
         self.label = QtWidgets.QLabel(parent=self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(210, 10, 111, 31))
+        self.label.setGeometry(QtCore.QRect(240, 20, 111, 31))
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap("designer\\../icons/sunrise.svg"))
         self.label.setObjectName("label")

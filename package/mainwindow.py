@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QMainWindow, QDialog, QTableWidgetItem, QHeaderView, QAbstractItemView, QTableWidget, QLabel
-from PyQt6.QtGui import QMovie
+from PyQt6.QtGui import QMovie, QFont
 from package import connection_db
 from package.ui.mainwindow_ui import Ui_MainWindow
 from package.ui import add_task_dialog_ui
@@ -39,6 +39,7 @@ class MainWindow(QMainWindow):
         movie.start()
         
         self.ui.listWidget.itemClicked.connect(self.task_done)
+        self.ui.listWidget.setFont(QFont('Helvetica [Cronyx]', 14))
         self.ui.add_button.clicked.connect(self.add_it)
         self.ui.remove_button.clicked.connect(self.remove_it)
         self.ui.edit_button.clicked.connect(self.edit_it)
