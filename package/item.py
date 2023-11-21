@@ -9,6 +9,10 @@ class Item():
 
 
     def __deadline_replace(self):
+        if self.deadline.lower() == "today":
+            self.deadline = datetime.now().strftime("%d/%m/%Y")
+            
+            return
         if "-" in self.deadline:
             self.deadline = self.deadline.replace("-", "/")
         if ' ' in self.deadline:

@@ -214,8 +214,6 @@ class MainWindow(QMainWindow):
                     self.tasks.remove(i)
                     break
 
-            print(self.tasks)
-
         except Exception as e:
             print(e)
 

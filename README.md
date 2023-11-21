@@ -4,7 +4,8 @@ Consiste em uma lista de afazeres que ajuda o usuário a controlar suas tarefas 
 <img src="icons/project_img_2.png" alt="Tela principal" width="565"/>
 
 ## Adicionar
-* Para adicionar algo, a data deve seguir o formato DD/MM/YY, DD-MM-YY, DD MM YY ou DD.MM.YY.
+* Para adicionar algo, a data deve seguir o formato data, mês e ano, respectivamente separados por "/", ".", " " ou "-".
+* O termo "today" pode ser usado para colocar a data atual.
 * O título deve ser único.
 
 ## Remover
