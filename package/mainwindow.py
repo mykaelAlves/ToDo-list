@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QMainWindow, QDialog, QTableWidgetItem, QHeaderView, QAbstractItemView, QTableWidget
+from PyQt6.QtWidgets import QMainWindow, QDialog, QTableWidgetItem, QHeaderView, QAbstractItemView, QTableWidget, QLabel
+from PyQt6.QtGui import QMovie
 from package import connection_db
 from package.ui.mainwindow_ui import Ui_MainWindow
 from package.ui import add_task_dialog_ui
@@ -31,6 +32,12 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.load_list(self.ui.listWidget)
+        
+        movie = QMovie("icons/cat_.gif") 
+        self.ui.cat.setMovie(movie)
+  
+        movie.start()
+        
         self.ui.listWidget.itemClicked.connect(self.task_done)
         self.ui.add_button.clicked.connect(self.add_it)
         self.ui.remove_button.clicked.connect(self.remove_it)

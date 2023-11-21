@@ -1,7 +1,7 @@
 # ToDo-list
 Consiste em uma lista de afazeres que ajuda o usuário a controlar suas tarefas e datas importantes.
 
-![Imagem da tela principal](icons/project_img_1.png "Tela principal")
+<img src="icons/project_img_2.png" alt="Tela principal" width="565"/>
 
 ## Adicionar
 * Para adicionar algo, a data deve seguir o formato DD/MM/YY, DD-MM-YY, DD MM YY ou DD.MM.YY.
