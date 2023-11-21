@@ -8,7 +8,7 @@ Consiste em uma lista de afazeres que ajuda o usuário a controlar suas tarefas 
 * O título deve ser único.
 
 ## Remover
-> a ser implementado
+* Selicione e remova um item na janela de remoção.
 
 ## Editar
 > a ser implementado
@@ -18,3 +18,6 @@ Consiste em uma lista de afazeres que ajuda o usuário a controlar suas tarefas 
 
 ## Tarefas do dia
 * As tarefas que tem data limite no dia presente, serão apresentadas na home page e quando concluídas podem ser removidas pelo botão "Done".
+
+## Barra de menu
+> se der tempo

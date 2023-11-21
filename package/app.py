@@ -6,7 +6,7 @@ import sys
 def run():
     app = QApplication(sys.argv)
     window = MainWindow()
-
+  
     app.exec()
 
     window.connection.commit()

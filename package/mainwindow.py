@@ -1,17 +1,19 @@
-from PyQt6.QtWidgets import QMainWindow, QDialog, QTableWidgetItem
+from PyQt6.QtWidgets import QMainWindow, QDialog, QTableWidgetItem, QHeaderView, QAbstractItemView, QTableWidget
 from package import connection_db
 from package.ui.mainwindow_ui import Ui_MainWindow
 from package.ui import add_task_dialog_ui
 from package.ui import remove_task_dialog_ui
 from package.ui import see_all_tasks_dialog_ui
 from package.ui import edit_task_dialog_ui
+from package.ui import error_dialog_ui
 from package.task import Task
+from package import check
+import sqlite3
 
 
 class MainWindow(QMainWindow):
     connection, con_cursor = connection_db.get_connection()
     tasks = []
-    no_deadline_exception = "NoDeadlineException: there's a column with no deadline in acceptable format"
     
 
     def __init__(self):
@@ -22,8 +24,8 @@ class MainWindow(QMainWindow):
         if not bool(self.con_cursor.fetchall()): #check if db exists
             self.con_cursor.execute('''CREATE TABLE Items (
                                     title TEXT NOT NULL UNIQUE,
-                                    description text,
-                                    deadline datetime
+                                    deadline datetime,
+                                    description text
                                     );''')
             
         self.ui = Ui_MainWindow()
@@ -47,7 +49,7 @@ class MainWindow(QMainWindow):
         listWidget.clear()
 
         for row in records:
-            task = Task(row[0], row[2], row[1])
+            task = Task(row[0], row[1], row[2])
 
             self.tasks.append(task)
 
@@ -74,8 +76,8 @@ class MainWindow(QMainWindow):
                 pass
                 #to implement
 
-        except:
-            print(self.no_deadline_exception)
+        except Exception as e:
+            print(e)
 
 
     def was_clicked(self):
@@ -98,13 +100,22 @@ class MainWindow(QMainWindow):
             deadline = ui.task_date.toPlainText()
             description = ui.task_details.toPlainText()
 
-            self.tasks.append(Task(deadline, title, description))
+            self.tasks.append(Task(title, deadline, description))
 
             title = self.tasks[len(self.tasks) - 1].title
             deadline = self.tasks[len(self.tasks) - 1].deadline
             description = self.tasks[len(self.tasks) - 1].description
 
-            self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (deadline, description, title))
+            if not check.deadline_format(deadline):
+                self.tasks.remove(self.tasks[len(self.tasks) - 1])
+                self.error(text="ERROR: WRONG DATE FORMAT")
+
+                return
+                
+            try:
+                self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, deadline, description,))
+            except sqlite3.IntegrityError as e:
+                self.error(text="ERROR: TITLE MUST BE UNIQUE")
 
             self.load_list(self.ui.listWidget)
 
@@ -121,7 +132,7 @@ class MainWindow(QMainWindow):
         records = self.con_cursor.fetchall()
 
         for row in records:
-            task = Task(row[0], row[2], row[1])
+            task = Task(row[0], row[1], row[2])
 
             ui.task_list.addItem(task.title)
 
@@ -131,6 +142,15 @@ class MainWindow(QMainWindow):
         dialog.exec()
 
         self.load_list(self.ui.listWidget)
+
+
+    def error(self, text):
+        error = QDialog()
+        error_ui = error_dialog_ui.Ui_Dialog()
+        error_ui.setupUi(error)
+        error_ui.label.setText(text)
+
+        error.exec()
 
 
     def see_it(self):
@@ -144,16 +164,19 @@ class MainWindow(QMainWindow):
 
         ui.tableWidget.setRowCount(len(self.tasks))
         ui.tableWidget.setColumnWidth(0, 260)
-        ui.tableWidget.setColumnWidth(2, 542)
+        ui.tableWidget.setColumnWidth(2, 405)
 
         r = 0
 
         for row in records:
             ui.tableWidget.setItem(r, 0, QTableWidgetItem(row[0]))
-            ui.tableWidget.setItem(r, 1, QTableWidgetItem(row[2]))
-            ui.tableWidget.setItem(r, 2, QTableWidgetItem(row[1]))
+            ui.tableWidget.setItem(r, 1, QTableWidgetItem(row[1]))
+            ui.tableWidget.setItem(r, 2, QTableWidgetItem(row[2]))
             
             r+=1
+
+        ui.tableWidget.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        ui.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
 
         dialog.exec()
 

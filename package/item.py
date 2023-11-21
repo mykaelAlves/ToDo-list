@@ -1,22 +1,24 @@
 from datetime import datetime
-import time
 
 class Item():      
     def __init__(self, title, deadline, description):
         self.deadline = deadline
         self.title = title
         self.description = description
+        self.__deadline_replace()
+
+
+    def __deadline_replace(self):
+        if "-" in self.deadline:
+            self.deadline = self.deadline.replace("-", "/")
+        if ' ' in self.deadline:
+            self.deadline = self.deadline.replace(' ', "/")
+        if "." in self.deadline:
+            self.deadline = self.deadline.replace(".", "/")
 
 
     def __get_dates(self):
-        if "/" in self.deadline:
-            deadline = self.deadline.split("/");
-        if "-" in self.deadline:
-            deadline = self.deadline.split("-");
-        if ' ' in self.deadline:
-            deadline = self.deadline.split(' ');
-        if "." in self.deadline:
-            deadline = self.deadline.split(".");
+        deadline = self.deadline.split("/");
 
         deadline = [x for x in deadline if x != '']
 
