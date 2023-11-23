@@ -32,8 +32,8 @@ class Item():
             deadline[j] = int(i)
             j+=1
 
-        deadline = datetime(deadline[2], deadline[1], deadline[0])
-        today = datetime.now()
+        deadline = datetime(deadline[2], deadline[1], deadline[0]).date()
+        today = datetime.now().date()
 
         return deadline, today
         
@@ -50,7 +50,7 @@ class Item():
     def is_today(self):
         deadline, today_date = self.__get_dates()
 
-        if deadline.date() == today_date.date():
+        if deadline == today_date:
             return True
         
         return False

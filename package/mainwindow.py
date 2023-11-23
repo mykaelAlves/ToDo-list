@@ -7,6 +7,7 @@ from package.ui import remove_task_dialog_ui
 from package.ui import see_all_tasks_dialog_ui
 from package.ui import edit_task_dialog_ui
 from package.ui import error_dialog_ui
+from package.ui import edit_task_connect_dialog_ui
 from package.task import Task
 from package import check
 import sqlite3
@@ -54,6 +55,8 @@ class MainWindow(QMainWindow):
         records = self.con_cursor.fetchall()
         print(f"records: {records}")
         self.tasks.clear()
+        if listWidget == self.ui.listWidget:
+            self.ui.listWidget_2.clear()
         listWidget.clear()
 
         for row in records:
@@ -63,6 +66,7 @@ class MainWindow(QMainWindow):
 
             if listWidget == self.ui.listWidget:
                 self.today_list_widget()
+                self.due_list_widget()
 
                 continue
 
@@ -78,11 +82,10 @@ class MainWindow(QMainWindow):
             print(e)
 
 
-    def not_due_list_widget(self):
+    def due_list_widget(self):
         try:
-            if not self.tasks[len(self.tasks) - 1].is_due():
-                pass
-                #to implement
+            if self.tasks[len(self.tasks) - 1].is_due():
+                self.ui.listWidget_2.addItem(self.tasks[len(self.tasks) - 1].title)
 
         except Exception as e:
             print(e)
@@ -171,8 +174,8 @@ class MainWindow(QMainWindow):
         records = self.con_cursor.fetchall()
 
         ui.tableWidget.setRowCount(len(self.tasks))
-        ui.tableWidget.setColumnWidth(0, 260)
-        ui.tableWidget.setColumnWidth(2, 405)
+        ui.tableWidget.setColumnWidth(0, 200)
+        ui.tableWidget.setColumnWidth(2, 441)
 
         r = 0
 
@@ -197,12 +200,45 @@ class MainWindow(QMainWindow):
         for i in self.tasks:
             ui.task_list.addItem(i.title)
 
+        ui.remove_confirm_button.clicked.connect(lambda: self.edit_task(ui.task_list))
         ui.reject_button.clicked.connect(dialog.close)
 
         dialog.exec()
 
         self.load_list(self.ui.listWidget)
 
+    
+    def edit_task(self, listWidget):
+        dialog = QDialog()
+        ui = edit_task_connect_dialog_ui.Ui_Dialog()
+        ui.setupUi(dialog)
+        
+        title = listWidget.currentItem().text()
+        self.remove_task(listWidget)
+        
+        dialog.exec()
+        
+        deadline = ui.task_date.toPlainText()
+        description = ui.task_details.toPlainText()
+
+        self.tasks.append(Task(title, deadline, description))
+
+        title = self.tasks[len(self.tasks) - 1].title
+        deadline = self.tasks[len(self.tasks) - 1].deadline
+        description = self.tasks[len(self.tasks) - 1].description
+
+        if not check.deadline_format(deadline):
+            self.tasks.remove(self.tasks[len(self.tasks) - 1])
+            self.error(text="ERROR: WRONG DATE FORMAT")
+
+            return
+            
+        try:
+            self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, deadline, description,))
+        except sqlite3.IntegrityError as e:
+            self.error(text="ERROR: TITLE MUST BE UNIQUE")
+
+        self.load_list(self.ui.listWidget)
     
     def remove_task(self, listWidget):
         try:
