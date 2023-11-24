@@ -12,7 +12,7 @@ Consiste em uma lista de afazeres que ajuda o usuário a controlar suas tarefas 
 * Selicione e remova um item na janela de remoção.
 
 ## Editar
-> a ser implementado
+* Permite mudar a data e descrição de uma tarefa já registrada.
 
 ## Ver tudo
 * Mostra todas as tarefas, seus títulos, datas limites e descrições.
