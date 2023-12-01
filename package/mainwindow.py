@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QMainWindow, QDialog, QTableWidgetItem, QHeaderView, QAbstractItemView, QTableWidget, QLabel
-from PyQt6.QtGui import QMovie, QFont
+from PyQt6.QtGui import QMovie, QFont, QAction
 from package import connection_db
 from package.ui.mainwindow_ui import Ui_MainWindow
 from package.ui import add_task_dialog_ui
@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.load_list(self.ui.listWidget)
+        action = self.findChild(QAction, "actionTransparent_window")
         
         movie = QMovie("icons/cat_.gif") 
         self.ui.cat.setMovie(movie)
@@ -45,6 +46,7 @@ class MainWindow(QMainWindow):
         self.ui.edit_button.clicked.connect(self.edit_it)
         self.ui.see_all_button.clicked.connect(self.see_it)
         self.ui.done_button.clicked.connect(self.task_done)
+        action.triggered.connect(self.transparent_mode)
         self.show()
 
 
@@ -208,25 +210,29 @@ class MainWindow(QMainWindow):
         ui = edit_task_connect_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
         
-        title = listWidget.currentItem().text()
-        self.remove_task(listWidget)
+        for i in self.tasks:
+            if i.title == listWidget.currentItem().text():
+                task = i
+        
+        title = task.title
         
         dialog.exec()
         
         deadline = ui.task_date.toPlainText()
         description = ui.task_details.toPlainText()
 
-        self.tasks.append(Task(title, deadline, description))
-
-        title = self.tasks[len(self.tasks) - 1].title
-        deadline = self.tasks[len(self.tasks) - 1].deadline
-        description = self.tasks[len(self.tasks) - 1].description
-
-        if not check.deadline_format(deadline):
-            self.tasks.remove(self.tasks[len(self.tasks) - 1])
-            self.error(text="ERROR: WRONG DATE FORMAT")
-
+        try:
+            self.remove_task(listWidget)
+            check.check_task(task)
+        except RuntimeWarning as e:
+            self.error(e.__str__())
+            
             return
+        finally:
+            self.tasks.append(Task(title, deadline, description))
+            for i in self.tasks:
+                listWidget.addItem(i.title)
+            
             
         try:
             self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, deadline, description,))
@@ -253,3 +259,7 @@ class MainWindow(QMainWindow):
 
     def task_done(self):       
         self.ui.done_button.clicked.connect(lambda: self.remove_task(self.ui.listWidget))
+        
+    
+    def transparent_mode(self):
+        self.setWindowOpacity(0.8)
