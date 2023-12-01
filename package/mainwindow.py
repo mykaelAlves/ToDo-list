@@ -10,6 +10,7 @@ from package.ui import error_dialog_ui
 from package.ui import edit_task_connect_dialog_ui
 from package.task import Task
 from package import check
+import webbrowser
 import sqlite3
 
 
@@ -33,7 +34,9 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.load_list(self.ui.listWidget)
-        action = self.findChild(QAction, "actionTransparent_window")
+        action_transparent = self.findChild(QAction, "actionTransparent_window")
+        action_dark = self.findChild(QAction, "actionDark_mode")
+        action_light = self.findChild(QAction, "actionLight_mode")
         
         movie = QMovie("icons/cat_.gif") 
         self.ui.cat.setMovie(movie)
@@ -46,7 +49,10 @@ class MainWindow(QMainWindow):
         self.ui.edit_button.clicked.connect(self.edit_it)
         self.ui.see_all_button.clicked.connect(self.see_it)
         self.ui.done_button.clicked.connect(self.task_done)
-        action.triggered.connect(self.transparent_mode)
+        action_transparent.triggered.connect(self.transparent_mode)
+        action_dark.triggered.connect(self.dark_mode)
+        action_light.triggered.connect(self.light_mode)
+        self.ui.menuHelp.aboutToShow.connect(self.help_open)
         self.show()
 
 
@@ -241,6 +247,7 @@ class MainWindow(QMainWindow):
 
         self.load_list(self.ui.listWidget)
     
+    
     def remove_task(self, listWidget):
         try:
             title = listWidget.currentItem().text()
@@ -263,3 +270,20 @@ class MainWindow(QMainWindow):
     
     def transparent_mode(self):
         self.setWindowOpacity(0.8)
+        
+        
+    def dark_mode(self):
+        with open("designer/darkmode.txt") as f:
+            dark_style = f.read()
+        
+        self.setStyleSheet(dark_style)
+        self.setWindowOpacity(1)
+        
+        
+    def light_mode(self):
+        self.setStyleSheet(" ")
+        self.setWindowOpacity(1)
+        
+    
+    def help_open(self):
+        webbrowser.open('https://github.com/Macai13/ToDo-list/blob/main/README.md', new=2)
