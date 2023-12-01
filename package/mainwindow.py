@@ -96,21 +96,18 @@ class MainWindow(QMainWindow):
         description = ui.task_details.toPlainText()
 
         self.tasks.append(Task(title, deadline, description))
+        task = self.tasks[len(self.tasks) - 1]
 
-        title = self.tasks[len(self.tasks) - 1].title
-        deadline = self.tasks[len(self.tasks) - 1].deadline
-        description = self.tasks[len(self.tasks) - 1].description
+        title = task.title
+        deadline = task.deadline
+        description = task.description
 
-        if check.title_is_null(title):
+        try:
+            check.check_task(task)
+        except RuntimeWarning as e:
             self.tasks.remove(self.tasks[len(self.tasks) - 1])
-            self.error(text="ERROR: TITLE SHOULDN'T BE NULL")
-
-            return
-
-        if not check.deadline_format(deadline):
-            self.tasks.remove(self.tasks[len(self.tasks) - 1])
-            self.error(text="ERROR: WRONG DATE FORMAT")
-
+            self.error(e.__str__())
+            
             return
             
         try:

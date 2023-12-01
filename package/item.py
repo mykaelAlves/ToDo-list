@@ -24,8 +24,6 @@ class Item():
     def __get_dates(self):
         deadline = self.deadline.split("/");
 
-        deadline = [x for x in deadline if x != '']
-
         j = 0
 
         for i in deadline:   
