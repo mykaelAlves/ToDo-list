@@ -36,7 +36,6 @@ class MainWindow(QMainWindow):
         
         movie = QMovie("icons/cat_.gif") 
         self.ui.cat.setMovie(movie)
-  
         movie.start()
         
         self.ui.listWidget.itemClicked.connect(self.task_done)
@@ -91,49 +90,48 @@ class MainWindow(QMainWindow):
             print(e)
 
 
-    def was_clicked(self):
-        self.go = True
+    def add_task(self, ui):
+        title = ui.task_title.toPlainText()
+        deadline = ui.task_date.toPlainText()
+        description = ui.task_details.toPlainText()
+
+        self.tasks.append(Task(title, deadline, description))
+
+        title = self.tasks[len(self.tasks) - 1].title
+        deadline = self.tasks[len(self.tasks) - 1].deadline
+        description = self.tasks[len(self.tasks) - 1].description
+
+        if check.title_is_null(title):
+            self.tasks.remove(self.tasks[len(self.tasks) - 1])
+            self.error(text="ERROR: TITLE SHOULDN'T BE NULL")
+
+            return
+
+        if not check.deadline_format(deadline):
+            self.tasks.remove(self.tasks[len(self.tasks) - 1])
+            self.error(text="ERROR: WRONG DATE FORMAT")
+
+            return
+            
+        try:
+            self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, deadline, description,))
+        except sqlite3.IntegrityError as e:
+            self.error(text="ERROR: TITLE MUST BE UNIQUE")
+            
+        self.load_list(self.ui.listWidget)
 
 
-    def add_it(self):
-        self.go = False
-        
+    def add_it(self):        
         dialog = QDialog()
         ui = add_task_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
 
-        ui.buttonBox.accepted.connect(self.was_clicked)
+        ui.buttonBox.accepted.connect(lambda: self.add_task(ui))
 
         dialog.exec()
 
-        if self.go:
-            title = ui.task_title.toPlainText()
-            deadline = ui.task_date.toPlainText()
-            description = ui.task_details.toPlainText()
 
-            self.tasks.append(Task(title, deadline, description))
-
-            title = self.tasks[len(self.tasks) - 1].title
-            deadline = self.tasks[len(self.tasks) - 1].deadline
-            description = self.tasks[len(self.tasks) - 1].description
-
-            if not check.deadline_format(deadline):
-                self.tasks.remove(self.tasks[len(self.tasks) - 1])
-                self.error(text="ERROR: WRONG DATE FORMAT")
-
-                return
-                
-            try:
-                self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, deadline, description,))
-            except sqlite3.IntegrityError as e:
-                self.error(text="ERROR: TITLE MUST BE UNIQUE")
-
-            self.load_list(self.ui.listWidget)
-
-
-    def remove_it(self):
-        self.go = False
-        
+    def remove_it(self):        
         dialog = QDialog()
         ui = remove_task_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
