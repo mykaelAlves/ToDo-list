@@ -22,7 +22,7 @@ class Item():
 
 
     def __get_dates(self):
-        deadline = self.deadline.split("/");
+        deadline = self.deadline.split("/")
 
         j = 0
 

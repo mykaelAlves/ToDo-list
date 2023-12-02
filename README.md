@@ -21,4 +21,5 @@ Consiste em uma lista de afazeres que ajuda o usuário a controlar suas tarefas 
 * As tarefas que tem data limite no dia presente, serão apresentadas na home page e quando concluídas podem ser removidas pelo botão "Done".
 
 ## Barra de menu
-> se der tempo
+* Window > Preferences > Modo claro, modo escuro e modo transparente.
+* Help > redireciona para este README.

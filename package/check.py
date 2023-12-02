@@ -20,10 +20,14 @@ def __description_exceeded_lenght(description):
 
 
 def check_task(task):
-    if __title_is_null(task.title):
-        raise RuntimeWarning("ERROR: TITLE SHOULDN'T BE NULL")
-    if not __deadline_correct_format(task.deadline):
-        raise RuntimeWarning("ERROR: WRONG DATE FORMAT")
-    if __description_exceeded_lenght(task.description):
-        raise RuntimeWarning("ERROR: DESCRIPTION IS TOO LONG")
+    try:
+        if __title_is_null(task.title):
+            raise RuntimeWarning("ERROR: TITLE SHOULDN'T BE NULL")
+        if not __deadline_correct_format(task.deadline):
+            raise RuntimeWarning("ERROR: WRONG DATE FORMAT")
+        if __description_exceeded_lenght(task.description):
+            raise RuntimeWarning("ERROR: DESCRIPTION IS TOO LONG")
+        task.title
+    except AttributeError as e:
+        raise RuntimeWarning("ERROR: NOTHING WAS SELECTED")
     return True

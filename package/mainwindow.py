@@ -150,6 +150,7 @@ class MainWindow(QMainWindow):
 
             ui.task_list.addItem(task.title)
 
+
         ui.remove_confirm_button.clicked.connect(lambda: self.remove_task(ui.task_list))
         ui.reject_button.clicked.connect(dialog.close)
 
@@ -216,11 +217,19 @@ class MainWindow(QMainWindow):
         ui = edit_task_connect_dialog_ui.Ui_Dialog()
         ui.setupUi(dialog)
         
+        task = None
+        
+        if not bool(listWidget.currentItem()):
+            self.error("ERROR: NOTHING WAS SELECTED")
+            return
+        
         for i in self.tasks:
             if i.title == listWidget.currentItem().text():
                 task = i
         
         title = task.title
+        temp_deadline = task.deadline
+        temp_description = task.description
         
         dialog.exec()
         
@@ -235,11 +244,16 @@ class MainWindow(QMainWindow):
             
             return
         finally:
+            try:
+                check.check_task(Task(title, deadline, description))
+            except RuntimeWarning as e:
+                self.error(e.__str__())
+                deadline = temp_deadline
+                description = temp_description
             self.tasks.append(Task(title, deadline, description))
             for i in self.tasks:
                 listWidget.addItem(i.title)
-            
-            
+             
         try:
             self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, deadline, description,))
         except sqlite3.IntegrityError as e:
@@ -258,8 +272,8 @@ class MainWindow(QMainWindow):
                     self.tasks.remove(i)
                     break
 
-        except Exception as e:
-            print(e)
+        except AttributeError:
+            self.error("ERROR: NOTHING WAS SELECTED")
 
         self.load_list(listWidget)
 
