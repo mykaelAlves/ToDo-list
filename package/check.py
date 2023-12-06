@@ -7,7 +7,7 @@ def __deadline_correct_format(deadline):
     except Exception as e:
         print(e)
         return False
-    
+
     
 def __title_is_null(title):
     return not bool(title.strip())

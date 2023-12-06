@@ -251,11 +251,13 @@ class MainWindow(QMainWindow):
                 deadline = temp_deadline
                 description = temp_description
             self.tasks.append(Task(title, deadline, description))
+            listWidget.clear()
             for i in self.tasks:
                 listWidget.addItem(i.title)
              
         try:
-            self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (title, deadline, description,))
+            task = Task(title, deadline, description)
+            self.con_cursor.execute("INSERT INTO Items VALUES (?, ?, ?)", (task.title, task.deadline, task.description,))
         except sqlite3.IntegrityError as e:
             self.error(text="ERROR: TITLE MUST BE UNIQUE")
 
